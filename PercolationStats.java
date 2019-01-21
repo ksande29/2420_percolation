@@ -5,12 +5,9 @@ import edu.princeton.cs.algs4.StdStats;
 
 public class PercolationStats 
 {
-	private int N;
-	private int T;
 	private Percolation percolation;
 	private double[] thresholds;
 	private int numOpen;
-	
 	private int x;
 	private int y;
 		
@@ -22,29 +19,26 @@ public class PercolationStats
 		}
 		else
 		{	
-			this.N = N;
-			this.T = T;
-			this.thresholds= new double[T];
-			this.numOpen = 0;
+			thresholds= new double[T];
 		
 			for (int i = 0; i < T; i++)
 			{
+				numOpen = 0;
 				percolation = new Percolation(N);
 				
-		            while (!percolation.percolates()) 
+		        while (!percolation.percolates()) 
+		        {
+		           	x = StdRandom.uniform(N);
+		            y = StdRandom.uniform(N);
+		            System.out.println("x: " + x);
+	                System.out.println("y: " + y);
+		            if (!percolation.isOpen(x, y)) 
 		            {
-		                System.out.println("no percolation");
-		            	x = StdRandom.uniform(N);
-		                y = StdRandom.uniform(N);
-		                System.out.println("x: " + x);
-	                    System.out.println("y: " + y);
-		                if (!percolation.isOpen(x, y)) 
-		                {
-		                	percolation.open(x, y);
-		                    numOpen++;
-		                }
+		               	percolation.open(x, y);
+		                numOpen++;
 		            }
-		            thresholds[i] = numOpen / (N*N);   
+		        }
+		        thresholds[i] = (double) numOpen / (N*N);   
 			}
 			
 			System.out.println("mean: " + mean());
