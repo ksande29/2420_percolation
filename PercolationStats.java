@@ -30,8 +30,8 @@ public class PercolationStats
 		        {
 		           	x = StdRandom.uniform(N);
 		            y = StdRandom.uniform(N);
-		            System.out.println("x: " + x);
-	                System.out.println("y: " + y);
+		            //System.out.println("x: " + x);
+	                //System.out.println("y: " + y);
 		            if (!percolation.isOpen(x, y)) 
 		            {
 		               	percolation.open(x, y);
@@ -41,9 +41,9 @@ public class PercolationStats
 		        thresholds[i] = (double) numOpen / (N*N);   
 			}
 			
-			System.out.println("mean: " + mean());
-			System.out.println("standard deviation: " + stddev());
-			System.out.println("95% sure the threshold is between " + confidenceLow() + " and " + confidenceHigh());
+			System.out.printf("mean: %.2f%n", mean());
+			System.out.printf("standard deviation: %.2f%n", stddev());
+			System.out.printf("95%% confident that the threshold is between %.2f and %.2f%n", confidenceLow(), confidenceHigh());
 		}
 	}
 		
