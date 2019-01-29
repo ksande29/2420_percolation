@@ -15,6 +15,8 @@ public class PercolationStats
 	private int numOpen;
 	private int i;
 	private int j;
+	private int N;
+	private int T;
 		
 	/**
 	 * Constructor
@@ -32,6 +34,8 @@ public class PercolationStats
 		}
 		else
 		{	
+			this.N = N;
+			this.T = T;
 			thresholds= new double[T];
 		
 			for (int index = 0; index < T; index++)
@@ -54,11 +58,11 @@ public class PercolationStats
 		        thresholds[index] = (double) numOpen / (N*N); 
 		        
 		        //Used for testing
-		        //System.out.println("number open: " + numOpen);
-		        //System.out.println("total number: " + N*N);
-		        //double threshold = (double) numOpen / (N*N);
-		        //System.out.println("threshold: " + threshold);
-		        //System.out.println();  
+		        /*System.out.println("number open: " + numOpen);
+		        System.out.println("total number: " + N*N);
+		        double threshold = (double) numOpen / (N*N);
+		        System.out.println("threshold: " + threshold);
+		        System.out.println();  */
 			}
 		}
 	}
@@ -90,7 +94,7 @@ public class PercolationStats
 	 */
 	public double confidenceLow() // low endpoint of 95% confidence interval
 	{
-		return mean() - stddev();
+		return mean() - (1.96 * stddev() / Math.sqrt(T));
 	}
 	
 	/**
@@ -100,7 +104,7 @@ public class PercolationStats
 	 */
 	public double confidenceHigh() // high endpoint of 95% confidence interval
 	{
-		return mean() + stddev();
+		return mean() + (1.96 * stddev() / Math.sqrt(T));
 	}
 
 	/**
@@ -108,9 +112,9 @@ public class PercolationStats
 	 */
 	private void printResults()
 	{		
-		System.out.printf("mean: %.2f%n", mean());
-		System.out.printf("standard deviation: %.2f%n", stddev());
-		System.out.printf("95%% confident that the threshold is between %.2f and %.2f%n", confidenceLow(), confidenceHigh());
+		System.out.printf("mean: %f%n", mean());
+		System.out.printf("standard deviation: %f%n", stddev());
+		System.out.printf("95%% confident that the threshold is between %f and %f%n", confidenceLow(), confidenceHigh());
 	}
 	
 	/**
@@ -119,17 +123,17 @@ public class PercolationStats
 	 */
 	public static void main(String[] args)
 	{
-		PercolationStats stats = new PercolationStats(3, 1000);
+		PercolationStats stats = new PercolationStats(5, 1000);
 		stats.printResults();
 		System.out.println();
 		
-		PercolationStats stats2 = new PercolationStats(4, 1000);
+		/*PercolationStats stats2 = new PercolationStats(4, 1000);
 		stats2.printResults();
 		System.out.println();
 		
-		PercolationStats stats3 = new PercolationStats(5, 1000);
+		PercolationStats stats3 = new PercolationStats(3, 1000);
 		stats3.printResults();
-		System.out.println();
+		System.out.println();*/
 	}
 	
 
