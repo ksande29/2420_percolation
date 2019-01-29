@@ -123,17 +123,9 @@ public class PercolationStats
 	 */
 	public static void main(String[] args)
 	{
-		PercolationStats stats = new PercolationStats(5, 1000);
+		PercolationStats stats = new PercolationStats(4, 20);
 		stats.printResults();
 		System.out.println();
-		
-		/*PercolationStats stats2 = new PercolationStats(4, 1000);
-		stats2.printResults();
-		System.out.println();
-		
-		PercolationStats stats3 = new PercolationStats(3, 1000);
-		stats3.printResults();
-		System.out.println();*/
 	}
 	
 
