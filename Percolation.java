@@ -88,7 +88,7 @@ public class Percolation
 			if (j > 0 && isOpen(i, j-1)) //connect left
 				uf.union(getFlatIndex(i, j), getFlatIndex(i, j-1));
 			
-			if (j < (N - 1) && isOpen(i, j+1)) //connect right********************************
+			if (j < (N - 1) && isOpen(i, j+1)) //connect right
 				uf.union(getFlatIndex(i, j), getFlatIndex(i, j+1));
 		}
 	}
