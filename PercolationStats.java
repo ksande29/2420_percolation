@@ -13,8 +13,8 @@ public class PercolationStats
 	private Percolation percolation;
 	private double[] thresholds;
 	private int numOpen;
-	private int x;
-	private int y;
+	private int i;
+	private int j;
 		
 	/**
 	 * Constructor
@@ -34,24 +34,24 @@ public class PercolationStats
 		{	
 			thresholds= new double[T];
 		
-			for (int i = 0; i < T; i++)
+			for (int index = 0; index < T; index++)
 			{
 				numOpen = 0;
 				percolation = new Percolation(N);
 				
 		        while (!percolation.percolates()) 
 		        {
-		           	x = StdRandom.uniform(N);
-		            y = StdRandom.uniform(N);
-		            //System.out.println("X: " + x + " Y: " + y);
-		            if (!percolation.isOpen(x, y)) 
+		           	i = StdRandom.uniform(N);
+		            j = StdRandom.uniform(N);
+		            //System.out.println("i: " + i + " j: " + j);
+		            if (!percolation.isOpen(i, j)) 
 		            {
-		               	percolation.open(x, y);
+		               	percolation.open(i, j);
 		                numOpen++;
 		            }
 		        }
 		        
-		        thresholds[i] = (double) numOpen / (N*N); 
+		        thresholds[index] = (double) numOpen / (N*N); 
 		        
 		        //Used for testing
 		        //System.out.println("number open: " + numOpen);
