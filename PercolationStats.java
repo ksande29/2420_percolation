@@ -47,7 +47,6 @@ public class PercolationStats
 		        {
 		           	i = StdRandom.uniform(N);
 		            j = StdRandom.uniform(N);
-		            //System.out.println("i: " + i + " j: " + j);
 		            if (!percolation.isOpen(i, j)) 
 		            {
 		               	percolation.open(i, j);
@@ -56,13 +55,6 @@ public class PercolationStats
 		        }
 		        
 		        thresholds[index] = (double) numOpen / (N*N); 
-		        
-		        //Used for testing
-		        /*System.out.println("number open: " + numOpen);
-		        System.out.println("total number: " + N*N);
-		        double threshold = (double) numOpen / (N*N);
-		        System.out.println("threshold: " + threshold);
-		        System.out.println();  */
 			}
 		}
 	}
@@ -123,7 +115,7 @@ public class PercolationStats
 	 */
 	public static void main(String[] args)
 	{
-		PercolationStats stats = new PercolationStats(4, 20);
+		PercolationStats stats = new PercolationStats(4, 100);
 		stats.printResults();
 		System.out.println();
 	}
