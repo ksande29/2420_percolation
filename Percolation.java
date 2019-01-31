@@ -3,8 +3,9 @@ package percolation;
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 /**
- * 
- * @author Kate
+ * Creates a Percolation which has methods to open a spot, to see if a spot is open, to see if a spot has water
+ * in it and if it percolates.
+ * @author Kate Sanders
  *
  */
 public class Percolation 
@@ -12,6 +13,7 @@ public class Percolation
 	private int N; 						//number of rows/columns
 	private boolean[][] isSqrOpen; 
 	private WeightedQuickUnionUF uf;
+	private WeightedQuickUnionUF ufFull;
 	private int top; 					//index of top node in WeightedQuickUnion
 	private int bottom; 				//index of bottom node in WeightedQuickUnion
 	
@@ -37,6 +39,7 @@ public class Percolation
 			this.bottom = N*N + 1;
 			this.N = N;
 			this.uf = new WeightedQuickUnionUF(N*N + 2);
+			this.ufFull = new WeightedQuickUnionUF(N*N + 1); //bottom node not included
 			
 			//initialize all values in isOpen boolean array to false
 			this.isSqrOpen = new boolean[N][N]; 
@@ -52,6 +55,7 @@ public class Percolation
 			for (int j = 0; j < N; j++)
 			{
 				uf.union(top, getFlatIndex(0, j));
+				ufFull.union(top, getFlatIndex(0, j));
 			}
 			
 			//connect all nodes on bottom row to bottom node
@@ -79,17 +83,26 @@ public class Percolation
 			isSqrOpen[i][j] = true;	
 			
 			//connect open sites next to this site
-			if (i > 0 && isOpen(i-1, j)) // connect above
+			if (i > 0 && isOpen(i-1, j))
+			{// connect above
 				uf.union(getFlatIndex(i, j), getFlatIndex(i-1, j));
-			
+				ufFull.union(getFlatIndex(i, j), getFlatIndex(i-1, j));
+			}
 			if (i < N-1 && isOpen(i+1, j)) //connect below
+			{
 				uf.union(getFlatIndex(i, j), getFlatIndex(i+1, j));
-			
+				ufFull.union(getFlatIndex(i, j), getFlatIndex(i+1, j));
+			}
 			if (j > 0 && isOpen(i, j-1)) //connect left
+			{
 				uf.union(getFlatIndex(i, j), getFlatIndex(i, j-1));
-			
+				ufFull.union(getFlatIndex(i, j), getFlatIndex(i, j-1));
+			}
 			if (j < (N - 1) && isOpen(i, j+1)) //connect right
+			{
 				uf.union(getFlatIndex(i, j), getFlatIndex(i, j+1));
+				ufFull.union(getFlatIndex(i, j), getFlatIndex(i, j+1));
+			}
 		}
 	}
 	
@@ -140,7 +153,8 @@ public class Percolation
 		else
 		{
 			//if a site is connected to the top return true
-			if (uf.connected(top, getFlatIndex(i, j)) && isOpen(i, j))
+			//check with UF that doesn't have bottom node to prevent backwash
+			if (ufFull.connected(top, getFlatIndex(i, j)) && isOpen(i, j))
 				return true;
 			return false;
 		}
@@ -153,7 +167,7 @@ public class Percolation
 	 */
 	public boolean percolates() // does the system percolate? 
 	{				
-		//if top connected to bottom
+		//is top connected to bottom
 		return uf.connected(top, bottom);
 	}
 
